@@ -3,10 +3,11 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"github.com/izqui/functional"
 	"os"
 	"os/user"
 	"path"
+
+	"github.com/izqui/functional"
 )
 
 const (
@@ -96,7 +97,9 @@ func (conf *ConfFile) WriteConfiguration() error {
 
 	conf.File.Truncate(0)
 	conf.File.Seek(0, 0)
-	err := json.NewEncoder(conf.File).Encode(conf.Config)
+	encoder := json.NewEncoder(conf.File)
+	encoder.SetIndent("", "\t")
+	err := encoder.Encode(conf.Config)
 	logOnError(err)
 
 	return conf.File.Close()
@@ -166,7 +169,9 @@ func (cache *IssueCacheFile) WriteIssueCache() error {
 	cache.File.Seek(0, 0)
 
 	cache.Issues = functional.Filter(func(i *Issue) bool { return i != nil }, cache.Issues).([]*Issue)
-	err := json.NewEncoder(cache.File).Encode(cache.Issues)
+	encoder := json.NewEncoder(cache.File)
+	encoder.SetIndent("", "\t")
+	err := encoder.Encode(cache.Issues)
 	logOnError(err)
 
 	return cache.File.Close()
