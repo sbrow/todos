@@ -67,7 +67,7 @@ func main() {
 	}
 }
 
-// TODO(sbrow): New todo.
+// TODO(sbrow): New todo. [Issue](https://github.com/sbrow/todos/issues/5)
 func setup(root string) {
 
 	// Global configuration
@@ -302,6 +302,16 @@ func timeout(i time.Duration) chan bool {
 func showHelp() {
 
 	fmt.Println("Unknown command.")
+	fmt.Println("\t* setup: Setup the current repository.")
+	fmt.Println("\t* work: Runs todos and looks for todos in files in current git diff.")
+}
+func logOnError(err error) {
+
+	if err != nil {
+		log.Println("[Todos] Err:", err)
+	}
+}
+("Unknown command.")
 	fmt.Println("\t* setup: Setup the current repository.")
 	fmt.Println("\t* work: Runs todos and looks for todos in files in current git diff.")
 }
