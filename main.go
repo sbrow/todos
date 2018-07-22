@@ -112,7 +112,6 @@ func setup(root string) {
 }
 
 func work(root string, files []string) {
-
 	//Load configuration
 	global := OpenConfiguration(HOME_DIRECTORY_CONFIG)
 	defer global.File.Close()
