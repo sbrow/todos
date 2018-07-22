@@ -67,6 +67,7 @@ func main() {
 	}
 }
 
+// TODO(sbrow): New todo.
 func setup(root string) {
 
 	// Global configuration
