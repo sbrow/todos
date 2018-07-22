@@ -67,6 +67,7 @@ func main() {
 	}
 }
 
+// TODO(sbrow): Halp
 func setup(root string) {
 
 	// Global configuration
