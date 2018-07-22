@@ -3,10 +3,11 @@ package main
 import (
 	"bufio"
 	"errors"
-	"github.com/andrew-d/go-termutil"
 	"io/ioutil"
 	"os"
 	"strings"
+
+	"github.com/andrew-d/go-termutil"
 )
 
 func ReadFileLines(path string) ([]string, error) {

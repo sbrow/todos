@@ -310,13 +310,3 @@ func logOnError(err error) {
 		log.Println("[Todos] Err:", err)
 	}
 }
-("Unknown command.")
-	fmt.Println("\t* setup: Setup the current repository.")
-	fmt.Println("\t* work: Runs todos and looks for todos in files in current git diff.")
-}
-func logOnError(err error) {
-
-	if err != nil {
-		log.Println("[Todos] Err:", err)
-	}
-}

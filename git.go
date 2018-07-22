@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/izqui/functional"
 	"os/exec"
 	"path"
 	"strings"
+
+	"github.com/izqui/functional"
 )
 
 func GitDirectoryRoot() (string, error) {
@@ -90,7 +91,13 @@ func SetupHook(path string, script string) {
 
 func SetupGitPrecommitHook(dir string) {
 
-	SetupHook(path.Join(dir, ".git/hooks/pre-push"), "git diff --name-only origin/master..HEAD | todos work")
+	SetupHook(path.Join(dir, ".git/hooks/pre-push"), `CMD=todos
+OS="$(uname)"
+if [[ "$(uname)" =~ MINGW ]]
+then
+CMD=$CMD'.exe'
+fi
+git diff --name-only origin/master..HEAD | $CMD work`)
 }
 
 func SetupGitCommitMsgHook(dir string) {
