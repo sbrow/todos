@@ -67,7 +67,6 @@ func main() {
 	}
 }
 
-// TODO(sbrow): New todo. [Issue](https://github.com/sbrow/todos/issues/5)
 func setup(root string) {
 
 	// Global configuration
