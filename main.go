@@ -83,7 +83,7 @@ func setup(root string) {
 		open.Run(TOKEN_URL)
 		var scanToken string
 		fmt.Scanln(&scanToken)
-		global.Config.GithubToken = scanToken //TODO: Check if token is valid [Issue: https://github.com/izqui/todos/issues/32]
+		global.Config.GithubToken = scanToken //TODO: Check if token is valid [Issue](https://github.com/sbrow/todos/issues/2)
 	}
 	logOnError(global.WriteConfiguration())
 
@@ -99,7 +99,7 @@ func setup(root string) {
 		fmt.Printf("Enter the Github repo name (Default: %s):\n", repo)
 		fmt.Scanln(&repo)
 
-		// TODO: Check if repository exists [Issue: https://github.com/izqui/todos/issues/33]
+		// TODO: Check if repository exists [Issue](https://github.com/sbrow/todos/issues/1)
 		local.Config.Owner = owner
 		local.Config.Repo = repo
 	}
@@ -128,7 +128,7 @@ func work(root string, files []string) {
 		fmt.Println("[Todos] You need to setup the repo running 'todos setup'")
 
 	} else {
-		
+
 		ts := oauth2.StaticTokenSource(
 			&oauth2.Token{AccessToken: global.Config.GithubToken},
 		)
@@ -199,7 +199,7 @@ func work(root string, files []string) {
 						filename := path.Base(file)
 
 						body := fmt.Sprintf(ISSUE_BODY, filename, fmt.Sprintf(GITHUB_FILE_URL, owner, repo, branch, relativeFilePath))
-						issue, _, err := client.Issues.Create(owner, repo, &github.IssueRequest{Title: &todo, Body: &body})
+						issue, _, err := client.Issues.Create(oauth2.NoContext, owner, repo, &github.IssueRequest{Title: &todo, Body: &body})
 						logOnError(err)
 
 						if issue != nil {
@@ -214,7 +214,7 @@ func work(root string, files []string) {
 				select {
 				case issue := <-cb:
 
-					ref := fmt.Sprintf("[Issue: %s]", issue.IssueURL)
+					ref := fmt.Sprintf("[Issue](%s)", issue.IssueURL)
 					lines[issue.Line] = fmt.Sprintf("%s %s", lines[issue.Line], ref)
 					fmt.Printf("[Todos] Created issue #%d\n", issue.IssueNumber)
 					changes = true
@@ -239,7 +239,7 @@ func work(root string, files []string) {
 					go func(i Issue) {
 
 						var closed string = "closed"
-						_, _, err := client.Issues.Edit(owner, repo, is.IssueNumber, &github.IssueRequest{State: &closed})
+						_, _, err := client.Issues.Edit(oauth2.NoContext, owner, repo, is.IssueNumber, &github.IssueRequest{State: &closed})
 						logOnError(err)
 						closeCb <- i
 					}(*is)
