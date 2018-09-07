@@ -75,18 +75,18 @@ func SetupHook(path string, script string) {
 
 	bash := "#!/bin/bash"
 
-	lns, err := ReadFileLines(path)
+	lines, err := ReadFileLines(path)
 	logOnError(err)
 
-	if len(lns) == 0 {
-		lns = append(lns, bash)
+	if len(lines) == 0 {
+		lines = append(lines, bash)
 	}
 
 	//Filter existing script line
-	lns = functional.Filter(func(a string) bool { return a != script }, lns).([]string)
-	lns = append(lns, script)
+	lines = functional.Filter(func(a string) bool { return a != script }, lines).([]string)
+	lines = append(lines, script)
 
-	logOnError(WriteFileLines(path, lns, true))
+	logOnError(WriteFileLines(path, lines, true))
 }
 
 func SetupGitPrecommitHook(dir string) {
